@@ -1,0 +1,14 @@
+i#!/usr/bin/env bash
+
+commit_regex='^((build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test|Publish))'
+
+error_msg='
+.git/hooks/commit-msg: Aborting commit, try again with a valid message. The regexp checks for:
+
+* a conventional commit message subject (to be parsed into changelogs, see https://www.conventionalcommits.org/en/v1.0.0 ):
+   - a change type, either of "build", "chore", "ci", "docs", "feat", "fix", "perf", "refactor", "revert", "style", "test" or "Publish"'
+
+if ! grep -iqE "${commit_regex}" "$1"; then
+    echo "${error_msg}" >&2
+    exit 1
+fi
